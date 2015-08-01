@@ -33,7 +33,7 @@ import java.util.ArrayList;
  */
 public class ForecastFragment extends Fragment {
 
-    private final static String DEFAULT_LOCATION = "94043";
+    private final static String DEFAULT_LOCATION = "Saint-Petersburg";
     private ArrayAdapter<String> adapter;
 
     @Override
@@ -75,6 +75,7 @@ public class ForecastFragment extends Fragment {
         private final static String DAILY_WEATHER_URL =
                 "http://api.openweathermap.org/data/2.5/forecast/daily?";
         private final static String LOCATION_ZIP_CODE = "zip";
+        private final static String LOCATION_CITY_NAME = "q";
         private final static String MODE = "mode";
         private final static String JSON = "json";
         private final static String UNITS = "units";
@@ -103,7 +104,7 @@ public class ForecastFragment extends Fragment {
                 }
 
                 Uri uri = Uri.parse(DAILY_WEATHER_URL).buildUpon().
-                        appendQueryParameter(LOCATION_ZIP_CODE, strings[0]).
+                        appendQueryParameter(LOCATION_CITY_NAME, strings[0]).
                         appendQueryParameter(MODE, JSON).
                         appendQueryParameter(UNITS, METRIC).
                         appendQueryParameter(DAYS_COUNT, Integer.toString(defaultDaysNumber)).

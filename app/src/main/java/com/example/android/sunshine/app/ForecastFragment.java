@@ -165,7 +165,9 @@ public class ForecastFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String[] strings) {
-            super.onPostExecute(strings);
+            if (strings == null)
+                return;
+            adapter.clear();
             for (String listItem : strings) {
                 adapter.add(listItem);
             }

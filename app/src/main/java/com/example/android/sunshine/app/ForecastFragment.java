@@ -65,8 +65,24 @@ public class ForecastFragment extends Fragment {
         if (id == R.id.action_refresh) {
             fetchForecast();
             return true;
+        } else if (id == R.id.show_preferred_location) {
+            showPreferredLocationOnMap();
+            return true;
         } else {
-            return super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void showPreferredLocationOnMap() {
+        String city = preferences.getString(getString(R.string.pref_location_key),
+                getString(R.string.pref_location_default));
+        Uri intentUri = Uri.parse("geo:0,0?").buildUpon().appendQueryParameter("q", city).build();
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, intentUri);
+        if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(mapIntent);
+        } else {
+            Log.e(ForecastFragment.class.getSimpleName(),
+                    "Could not resolve activity for ACTION_VIEW intent.");
         }
     }
 

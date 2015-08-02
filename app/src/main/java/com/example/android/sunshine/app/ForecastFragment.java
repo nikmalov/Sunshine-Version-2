@@ -1,5 +1,6 @@
 package com.example.android.sunshine.app;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -67,6 +69,15 @@ public class ForecastFragment extends Fragment {
         adapter = new ArrayAdapter<>(getActivity(), R.layout.list_item_forecast,
                         R.id.list_item_forecast_textview, mockData);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent detailViewIntent = new Intent(getActivity(), DetailActivity.class);
+                detailViewIntent.putExtra(DetailActivity.FORECAST_DATA,
+                        adapterView.getItemAtPosition(i).toString());
+                startActivity(detailViewIntent);
+            }
+        });
         return rootView;
     }
 

@@ -37,6 +37,7 @@ import java.util.ArrayList;
  */
 public class ForecastFragment extends Fragment {
 
+    private final static String METRIC_UNITS = "metric";
     private static SharedPreferences preferences;
     private ArrayAdapter<String> adapter;
 
@@ -239,8 +240,11 @@ public class ForecastFragment extends Fragment {
         }
 
         private String formatHighLows(double high, double low) {
-            long roundedHigh = Math.round(high);
-            long roundedLow = Math.round(low);
+            String tempUnits = preferences.getString(getString(R.string.pref_temp_unit_key),
+                    getString(R.string.pref_location_default));
+            boolean isMetric = tempUnits == null || tempUnits.equalsIgnoreCase(METRIC_UNITS);
+            long roundedHigh = isMetric ? Math.round(high) : Math.round(32 + 1.8 * high);
+            long roundedLow = isMetric ? Math.round(low) : Math.round(32 + 1.8 * high);
 
             return roundedHigh + "/" + roundedLow;
         }

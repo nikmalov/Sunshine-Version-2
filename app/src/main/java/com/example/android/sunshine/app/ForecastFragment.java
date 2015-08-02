@@ -1,9 +1,11 @@
 package com.example.android.sunshine.app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.format.Time;
 import android.util.Log;
@@ -35,13 +37,20 @@ import java.util.ArrayList;
  */
 public class ForecastFragment extends Fragment {
 
-    private final static String DEFAULT_LOCATION = "Saint-Petersburg";
+    private static SharedPreferences preferences;
     private ArrayAdapter<String> adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        fetchForecast();
     }
 
     @Override
@@ -53,7 +62,7 @@ public class ForecastFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
-            new FetchWeatherTask().execute(DEFAULT_LOCATION);
+            fetchForecast();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -79,6 +88,12 @@ public class ForecastFragment extends Fragment {
             }
         });
         return rootView;
+    }
+
+    private void fetchForecast() {
+        String city = preferences.getString(getString(R.string.pref_location_key),
+                getString(R.string.pref_location_default));
+        new FetchWeatherTask().execute(city);
     }
 
     private class FetchWeatherTask extends AsyncTask<String, Void, String[]> {

@@ -212,9 +212,7 @@ public class ForecastFragment extends Fragment {
             if (strings == null)
                 return;
             adapter.clear();
-            for (String listItem : strings) {
-                adapter.add(listItem);
-            }
+            adapter.addAll(strings);
         }
 
         private String[] parseJsonResponse(String jsonResponse, int daysCount) throws JSONException

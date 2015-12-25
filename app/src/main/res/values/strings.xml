@@ -12,7 +12,8 @@
     <string name="pref_location_default" translatable="false">Saint-Petersburg</string>
     <string name="pref_temp_unit_label">Temperature units</string>
     <string name="pref_temp_unit_key" translatable="false">tempUnit</string>
-    <string name="pref_temp_unit_default" translatable="false">metric</string>
+    <string name="pref_temp_unit_metric" translatable="false">metric</string>
+    <string name="pref_temp_unit_imperial" translatable="false">imperial</string>
 
     <string name="refresh_menu_item" translatable="false">Refresh</string>
     <string name="title_activity_detailed_view">DetailedView</string>

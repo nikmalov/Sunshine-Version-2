@@ -74,8 +74,7 @@ public class ForecastFragment extends Fragment {
     }
 
     private void showPreferredLocationOnMap() {
-        String city = preferences.getString(getString(R.string.pref_location_key),
-                getString(R.string.pref_location_default));
+        String city = getPreferredLocation();
         Uri intentUri = Uri.parse("geo:0,0?").buildUpon().appendQueryParameter("q", city).build();
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, intentUri);
         if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null) {
@@ -108,159 +107,11 @@ public class ForecastFragment extends Fragment {
     }
 
     private void fetchForecast() {
-        String city = preferences.getString(getString(R.string.pref_location_key),
-                getString(R.string.pref_location_default));
-        new FetchWeatherTask().execute(city);
+        new FetchWeatherTask(getActivity(), adapter).execute(getPreferredLocation());
     }
 
-    private class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
-
-        private final static String DAILY_WEATHER_URL =
-                "http://api.openweathermap.org/data/2.5/forecast/daily?";
-        private final static String LOCATION_ZIP_CODE = "zip";
-        private final static String LOCATION_CITY_NAME = "q";
-        private final static String MODE = "mode";
-        private final static String JSON = "json";
-        private final static String UNITS = "units";
-        private final static String METRIC = "metric";
-        private final static String DAYS_COUNT = "cnt";
-        private final static int defaultDaysNumber = 7;
-        private final String TAG = FetchWeatherTask.class.getSimpleName();
-
-        @Override
-        protected String[] doInBackground(String... strings) {
-            // These two need to be declared outside the try/catch
-            // so that they can be closed in the finally block.
-            HttpURLConnection urlConnection = null;
-            BufferedReader reader = null;
-
-            // Will contain the raw JSON response as a string.
-            String forecastJsonStr = null;
-
-            try {
-                // Construct the URL for the OpenWeatherMap query
-                // Possible parameters are available at OWM's forecast API page, at
-                // http://openweathermap.org/API#forecast
-                if (strings[0] == null || strings[0].isEmpty()) {
-                    Log.e(TAG, "No url was provided.");
-                    return null;
-                }
-
-                Uri uri = Uri.parse(DAILY_WEATHER_URL).buildUpon().
-                        appendQueryParameter(LOCATION_CITY_NAME, strings[0]).
-                        appendQueryParameter(MODE, JSON).
-                        appendQueryParameter(UNITS, METRIC).
-                        appendQueryParameter(DAYS_COUNT, Integer.toString(defaultDaysNumber)).
-                        build();
-
-                URL url = new URL(uri.toString());
-                // Create the request to OpenWeatherMap, and open the connection
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-
-                // Read the input stream into a String
-                InputStream inputStream = urlConnection.getInputStream();
-                StringBuffer buffer = new StringBuffer();
-                if (inputStream == null) {
-                    // Nothing to do.
-                    return null;
-                }
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                    // But it does make debugging a *lot* easier if you print out the completed
-                    // buffer for debugging.
-                    buffer.append(line).append("\n");
-                }
-
-                if (buffer.length() == 0) {
-                    // Stream was empty.  No point in parsing.
-                    return null;
-                }
-                forecastJsonStr = buffer.toString();
-            } catch (IOException e) {
-                Log.e(TAG, "Error ", e);
-                // If the code didn't successfully get the weather data, there's no point in
-                // attempting to parse it.
-                return null;
-            } finally{
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (final IOException e) {
-                        Log.e(TAG, "Error closing stream", e);
-                    }
-                }
-            }
-            String[] result = new String[defaultDaysNumber];
-            try {
-                result = parseJsonResponse(forecastJsonStr, defaultDaysNumber);
-            } catch (JSONException e) {
-                Log.e(TAG, "JSON response failed to parse.");
-            }
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(String[] strings) {
-            if (strings == null)
-                return;
-            adapter.clear();
-            adapter.addAll(strings);
-        }
-
-        private String[] parseJsonResponse(String jsonResponse, int daysCount) throws JSONException
-        {
-            final String weather = "weather";
-            final String mainInfo = "main";
-            final String tempInfo = "temp";
-            final String minTemp = "min";
-            final String maxTemp = "max";
-            final String separator = " - ";
-
-            String[] result = new String[daysCount];
-            Time dayTime = new Time();
-            dayTime.setToNow();
-            int julianStartDay = Time.getJulianDay(System.currentTimeMillis(), dayTime.gmtoff);
-            JSONObject jsonObject = new JSONObject(jsonResponse);
-            JSONArray daysDataArray = jsonObject.getJSONArray("list");
-            StringBuilder builder = new StringBuilder();
-            JSONObject jsonDayObject;
-            JSONObject tempObject;
-            for (int i = 0; i < result.length; i++) {
-                jsonDayObject = daysDataArray.optJSONObject(i);
-                builder.append(getReadableDateString(dayTime.setJulianDay(julianStartDay+i))).
-                        append(separator).
-                        append(jsonDayObject.getJSONArray(weather).getJSONObject(0).getString(mainInfo)).
-                        append(separator);
-                tempObject = jsonDayObject.getJSONObject(tempInfo);
-                builder.append(formatHighLows(
-                        tempObject.getDouble(maxTemp), tempObject.getDouble(minTemp)));
-                result[i] = builder.toString();
-                builder.delete(0, builder.length());
-            }
-            return result;
-        }
-
-        private String getReadableDateString(long timeInMillis) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM dd");
-            return dateFormat.format(timeInMillis);
-        }
-
-        private String formatHighLows(double high, double low) {
-            String tempUnits = preferences.getString(getString(R.string.pref_temp_unit_key),
-                    getString(R.string.pref_location_default));
-            boolean isMetric = tempUnits == null || tempUnits.equalsIgnoreCase(METRIC_UNITS);
-            long roundedHigh = isMetric ? Math.round(high) : Math.round(32 + 1.8 * high);
-            long roundedLow = isMetric ? Math.round(low) : Math.round(32 + 1.8 * high);
-
-            return roundedHigh + "/" + roundedLow;
-        }
+    private String getPreferredLocation() {
+        return preferences.getString(getString(R.string.pref_location_key),
+                getString(R.string.pref_location_default));
     }
 }

@@ -22,7 +22,7 @@ import android.widget.TextView;
 import com.example.android.sunshine.app.data.WeatherContract;
 
 /**
- * Created by nikmalov on 26.12.2015.
+ * Created by nikmalov.
  */
 public class DetailedForecastFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<Cursor>
@@ -126,7 +126,7 @@ public class DetailedForecastFragment extends Fragment
     }
 
     private void populateData(Cursor cursor) {
-        if (cursor.moveToNext()) {
+        if (cursor.moveToFirst()) {
             boolean isMetric = Utility.isMetric(getActivity());
             long dateInMillis = cursor.getLong(COL_WEATHER_DATE);
             mDayTextView.setText(Utility.getDayName(getActivity(), dateInMillis));

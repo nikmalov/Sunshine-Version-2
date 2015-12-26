@@ -10,7 +10,6 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -88,6 +87,7 @@ public class DetailActivity extends ActionBarActivity {
 
         ShareActionProvider shareActionProvider;
         final String SHARE_HASHTAG = "#SunshineApp";
+        private final static String DETAILED_FORECAST_URI = "uri";
         String weatherData;
         private View rootView;
 
@@ -98,7 +98,7 @@ public class DetailActivity extends ActionBarActivity {
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
             Bundle uriData = new Bundle();
-            uriData.putParcelable("uri", getActivity().getIntent().getData());
+            uriData.putParcelable(DETAILED_FORECAST_URI, getActivity().getIntent().getData());
             getLoaderManager().initLoader(WEATHER_LOADER_ID, uriData, this);
         }
 
@@ -131,8 +131,7 @@ public class DetailActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
-            rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-            return rootView;
+            return rootView = inflater.inflate(R.layout.fragment_detail, container, false);
         }
 
         private void populateData(Cursor cursor) {
@@ -159,8 +158,8 @@ public class DetailActivity extends ActionBarActivity {
 
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-            return new CursorLoader(getActivity(),
-                    (Uri)args.get("uri"), DETAILED_FORECAST_COLUMNS, null, null, null);
+            return new CursorLoader(getActivity(), (Uri)args.get(DETAILED_FORECAST_URI),
+                    DETAILED_FORECAST_COLUMNS, null, null, null);
         }
 
         @Override

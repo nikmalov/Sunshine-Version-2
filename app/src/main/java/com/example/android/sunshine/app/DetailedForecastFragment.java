@@ -142,8 +142,10 @@ public class DetailedForecastFragment extends Fragment
                     cursor.getFloat(COL_WEATHER_WIND_DIRECTION)));
             mPressureTextView.setText(getActivity().getString(R.string.format_pressure,
                     cursor.getFloat(COL_WEATHER_PRESSURE)));
-            int weatherId = cursor.getInt(COL_WEATHER_ID);
-            //TODO: add icon here
+            int weatherId = cursor.getInt(COL_WEATHER_CONDITION_ID);
+            int iconResId = Utility.getArtResourceForWeatherCondition(weatherId);
+            if (iconResId != -1)
+                mIconView.setImageDrawable(getResources().getDrawable(iconResId));
             mForecastTextView.setText(cursor.getString(COL_WEATHER_DESC));
         }
 

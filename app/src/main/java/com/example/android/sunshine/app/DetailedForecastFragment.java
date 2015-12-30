@@ -58,9 +58,10 @@ public class DetailedForecastFragment extends Fragment
 
     ShareActionProvider shareActionProvider;
     final String SHARE_HASHTAG = "#SunshineApp";
-    private final static String DETAILED_FORECAST_URI = "uri";
+    public final static String DETAILED_FORECAST_URI = "uri";
     String weatherData;
     private View rootView;
+    private Uri mUri;
 
     private TextView mDayTextView;
     private TextView mDateTextView;
@@ -78,9 +79,7 @@ public class DetailedForecastFragment extends Fragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Bundle uriData = new Bundle();
-        uriData.putParcelable(DETAILED_FORECAST_URI, getActivity().getIntent().getData());
-        getLoaderManager().initLoader(WEATHER_LOADER_ID, uriData, this);
+        getLoaderManager().initLoader(WEATHER_LOADER_ID, null, this);
     }
 
     @Override
@@ -125,6 +124,18 @@ public class DetailedForecastFragment extends Fragment
         return rootView;
     }
 
+    public void onLocationChanged(String newLocation) {
+        // replace the uri, since the location has changed
+        Uri uri = mUri;
+        if (null != uri) {
+            long date = WeatherContract.WeatherEntry.getDateFromUri(uri);
+            Uri updatedUri = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(newLocation, date);
+            mUri = updatedUri;
+            getLoaderManager().restartLoader(WEATHER_LOADER_ID, null, this);
+        }
+
+    }
+
     private void populateData(Cursor cursor) {
         if (cursor.moveToFirst()) {
             boolean isMetric = Utility.isMetric(getActivity());
@@ -162,7 +173,10 @@ public class DetailedForecastFragment extends Fragment
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(getActivity(), (Uri)args.get(DETAILED_FORECAST_URI),
+        Intent intent = getActivity().getIntent();
+        if (intent == null || intent.getData() == null)
+            return null;
+        return new CursorLoader(getActivity(), intent.getData(),
                 DETAILED_FORECAST_COLUMNS, null, null, null);
     }
 

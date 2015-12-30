@@ -27,7 +27,6 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
     private static final int WEATHER_LOADER_ID = 1;
     private ForecastAdapter adapter;
-    public static final String FRAGMENT_TAG = "ForecastFragmentTag";
 
     public static final String[] FORECAST_COLUMNS = {
             // In this case the id needs to be fully qualified with a table name, since
@@ -59,7 +58,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         setHasOptionsMenu(true);
     }
 
-    public void onLocationChange() {
+    public void onLocationChanged() {
         fetchForecast();
         getLoaderManager().restartLoader(WEATHER_LOADER_ID, null, this);
     }
@@ -107,10 +106,13 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Cursor cursor = (Cursor) adapterView.getItemAtPosition(i);
                 String locationSetting = Utility.getPreferredLocation(getActivity());
-                Intent detailActivityIntent = new Intent(getActivity(), DetailActivity.class).
-                        setData(WeatherEntry.buildWeatherLocationWithDate(
-                                locationSetting, cursor.getLong(ForecastAdapter.COL_WEATHER_DATE)));
-                startActivity(detailActivityIntent);
+                if (getActivity() instanceof Callback) {
+                    ((Callback) getActivity()).onItemSelected(
+                            WeatherEntry.buildWeatherLocationWithDate(locationSetting,
+                                    cursor.getLong(ForecastAdapter.COL_WEATHER_DATE)));
+                }
+//                Intent detailActivityIntent = new Intent(getActivity(), DetailActivity.class).setData();
+//                startActivity(detailActivityIntent);
 
             }
         });
@@ -139,5 +141,17 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         adapter.swapCursor(null);
+    }
+
+    /**
+     * A callback interface that all activities containing this fragment must
+     * implement. This mechanism allows activities to be notified of item
+     * selections.
+     */
+    public interface Callback {
+        /**
+         * DetailFragmentCallback for when an item has been selected.
+         */
+        public void onItemSelected(Uri dateUri);
     }
 }

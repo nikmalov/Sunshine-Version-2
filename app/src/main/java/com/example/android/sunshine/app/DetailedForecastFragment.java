@@ -112,7 +112,7 @@ public class DetailedForecastFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+        rootView = inflater.inflate(R.layout.fragment_detail_alias, container, false);
         mDayTextView = (TextView)rootView.findViewById(R.id.details_item_day_textview);
         mDateTextView = (TextView)rootView.findViewById(R.id.details_item_date_textview);
         mMaxTemperatureTextView = (TextView)rootView.findViewById(R.id.details_item_high_textview);
@@ -130,8 +130,7 @@ public class DetailedForecastFragment extends Fragment
         Uri uri = mUri;
         if (null != uri) {
             long date = WeatherContract.WeatherEntry.getDateFromUri(uri);
-            Uri updatedUri = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(newLocation, date);
-            mUri = updatedUri;
+            mUri = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(newLocation, date);
             getLoaderManager().restartLoader(WEATHER_LOADER_ID, null, this);
         }
 

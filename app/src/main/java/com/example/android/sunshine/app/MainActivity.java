@@ -27,6 +27,8 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
         } else {
             mTwoPane = false;
         }
+        ((ForecastFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_forecast)).
+                setIsTwoPane(mTwoPane);
         mLocation = Utility.getPreferredLocation(this);
     }
 

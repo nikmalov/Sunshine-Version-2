@@ -25,6 +25,7 @@ import static com.example.android.sunshine.app.data.WeatherContract.*;
  */
 public class ForecastFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    private boolean isTwoPane = false;
     private static final int WEATHER_LOADER_ID = 1;
     private static final String POSITION_KEY = "Position";
     private int mSelectedItemPosition;
@@ -66,6 +67,12 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         getLoaderManager().restartLoader(WEATHER_LOADER_ID, null, this);
     }
 
+    public void setIsTwoPane(boolean isTwoPane) {
+        this.isTwoPane = isTwoPane;
+        if (adapter != null)
+            adapter.setSpecialTodayView(!isTwoPane);
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.forecast_fragment, menu);
@@ -105,6 +112,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         listView = (ListView)rootView.findViewById(R.id.listview_forecast);
         adapter = new ForecastAdapter(getActivity(), null, 0);
+        adapter.setSpecialTodayView(!isTwoPane);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

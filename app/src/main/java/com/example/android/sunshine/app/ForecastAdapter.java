@@ -28,6 +28,8 @@ public class ForecastAdapter extends CursorAdapter {
     private static final int TODAY_VIEW_TYPE_IDX = 0;
     private static final int FUTURE_VIEW_TYPE_IDX = 1;
 
+    private boolean isSpecialTodayView;
+
     public ForecastAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
@@ -37,9 +39,13 @@ public class ForecastAdapter extends CursorAdapter {
         return 2;
     }
 
+    public void setSpecialTodayView(boolean isSpecialTodayView) {
+        this.isSpecialTodayView = isSpecialTodayView;
+    }
+
     @Override
     public int getItemViewType(int position) {
-        return position == 0 ? TODAY_VIEW_TYPE_IDX : FUTURE_VIEW_TYPE_IDX;
+        return position == 0 && isSpecialTodayView ? TODAY_VIEW_TYPE_IDX : FUTURE_VIEW_TYPE_IDX;
     }
 
     /*

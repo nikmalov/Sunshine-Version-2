@@ -104,16 +104,13 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Cursor cursor = (Cursor) adapterView.getItemAtPosition(i);
-                String locationSetting = Utility.getPreferredLocation(getActivity());
                 if (getActivity() instanceof Callback) {
+                    Cursor cursor = (Cursor) adapterView.getItemAtPosition(i);
+                    String locationSetting = Utility.getPreferredLocation(getActivity());
                     ((Callback) getActivity()).onItemSelected(
                             WeatherEntry.buildWeatherLocationWithDate(locationSetting,
                                     cursor.getLong(ForecastAdapter.COL_WEATHER_DATE)));
                 }
-//                Intent detailActivityIntent = new Intent(getActivity(), DetailActivity.class).setData();
-//                startActivity(detailActivityIntent);
-
             }
         });
         return rootView;

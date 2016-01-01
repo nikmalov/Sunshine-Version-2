@@ -12,13 +12,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
             android:id="@+id/details_item_day_textview"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
             android:id="@+id/details_item_date_textview"/>
 
         <LinearLayout
@@ -37,14 +35,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="New Text"
                     android:id="@+id/details_item_high_textview"
                     android:textSize="20sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="New Text"
                     android:id="@+id/details_item_low_textview"
                     android:textSize="20sp"/>
             </LinearLayout>
@@ -65,7 +61,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="New Text"
                     android:id="@+id/details_item_forecast"/>
             </LinearLayout>
         </LinearLayout>
@@ -73,19 +68,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
             android:id="@+id/details_item_humidity"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
             android:id="@+id/details_item_wind"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
             android:id="@+id/details_item_pressure"/>
 
     </LinearLayout>

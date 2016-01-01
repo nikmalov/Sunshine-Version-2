@@ -85,6 +85,7 @@ public class DetailedForecastFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getLoaderManager().restartLoader(WEATHER_LOADER_ID, null, this);
         setRetainInstance(true);
         setHasOptionsMenu(true);
     }
@@ -173,11 +174,11 @@ public class DetailedForecastFragment extends Fragment
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Intent intent = getActivity().getIntent();
-        if (intent == null || intent.getData() == null)
+        if (getArguments() != null)
+            mUri = (Uri)getArguments().get(DETAILED_FORECAST_URI);
+        if (mUri == null)
             return null;
-        return new CursorLoader(getActivity(), intent.getData(),
-                DETAILED_FORECAST_COLUMNS, null, null, null);
+        return new CursorLoader(getActivity(), mUri, DETAILED_FORECAST_COLUMNS, null, null, null);
     }
 
     @Override
@@ -189,6 +190,5 @@ public class DetailedForecastFragment extends Fragment
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
     }
 }

@@ -12,12 +12,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/details_item_day_textview"/>
+            android:id="@+id/details_item_day_textview"
+            android:textSize="24sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/details_item_date_textview"/>
+            android:id="@+id/details_item_date_textview"
+            android:textSize="16sp" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -36,13 +38,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/details_item_high_textview"
-                    android:textSize="20sp"/>
+                    android:textSize="92sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/details_item_low_textview"
-                    android:textSize="20sp"/>
+                    android:textSize="48sp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -61,24 +63,28 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/details_item_forecast"/>
+                    android:id="@+id/details_item_forecast"
+                    android:textSize="22sp" />
             </LinearLayout>
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/details_item_humidity"/>
+            android:id="@+id/details_item_humidity"
+            android:textSize="22sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/details_item_wind"/>
+            android:id="@+id/details_item_wind"
+            android:textSize="22sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/details_item_pressure"/>
+            android:id="@+id/details_item_pressure"
+            android:textSize="22sp" />
 
     </LinearLayout>
 

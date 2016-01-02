@@ -46,4 +46,6 @@
     <!-- Humidity format CHAR LIMIT=25]-->
     <string name="format_humidity">Humidity: <xliff:g id="humidity">%1.0f</xliff:g> %%</string>
 
+    <string name="detailed_view_image_description">Forecast image</string>
+    <string name="list_item_icon_decription">Forecast image</string>
 </resources>

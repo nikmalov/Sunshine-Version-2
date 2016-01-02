@@ -92,7 +92,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/details_item_icon" />
+                android:id="@+id/details_item_icon"
+                android:contentDescription="@string/detailed_view_image_description" />
 
             <TextView
                 android:layout_width="wrap_content"

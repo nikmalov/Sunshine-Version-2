@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_height="wrap_content"
-              android:layout_width="fill_parent"
-              android:background="@drawable/touch_selector"
-              android:gravity="fill_vertical"
-              android:minHeight="@dimen/minimal_list_item_height">
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:background="@drawable/touch_selector"
+    android:gravity="fill_vertical"
+    android:minHeight="@dimen/minimal_list_item_height">
 
     <FrameLayout
         android:layout_width="60dp"
@@ -31,7 +31,7 @@
             android:id="@+id/list_item_date_textview"
             android:textColor="@color/main_text_color"
             android:fontFamily="sans-serif-condensed"
-            android:textAppearance="?android:textAppearanceLarge"/>
+            android:textSize="20sp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
             android:id="@+id/list_item_forecast_textview"
             android:textColor="@color/main_text_color"
             android:fontFamily="sans-serif-condensed"
-            android:textAppearance="?android:textAppearanceSmall"/>
+            android:textSize="12sp"/>
 
     </LinearLayout>
 
@@ -57,8 +57,7 @@
             android:textColor="@color/main_text_color"
             android:layout_gravity="center"
             android:fontFamily="sans-serif-condensed"
-            android:textAppearance="?android:textAppearanceLarge"/>
-
+            android:textSize="20sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,7 +65,7 @@
             android:textColor="@color/main_text_color"
             android:fontFamily="sans-serif-condensed"
             android:layout_gravity="center"
-            android:textAppearance="?android:textAppearanceSmall"/>
+            android:textSize="12sp"/>
     </LinearLayout>
 
 </LinearLayout>

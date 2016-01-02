@@ -157,6 +157,7 @@ public class DetailedForecastFragment extends Fragment
             int iconResId = Utility.getArtResourceForWeatherCondition(weatherId);
             if (iconResId != -1)
                 mIconView.setImageDrawable(getResources().getDrawable(iconResId));
+            mIconView.setContentDescription(cursor.getString(COL_WEATHER_DESC));
             mForecastTextView.setText(cursor.getString(COL_WEATHER_DESC));
         }
 

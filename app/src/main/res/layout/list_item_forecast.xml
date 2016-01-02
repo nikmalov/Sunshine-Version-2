@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:id="@+id/list_item_icon"
-            android:contentDescription="@string/list_item_icon_decription"/>
+            android:contentDescription="@string/list_item_icon_description"/>
     </FrameLayout>
 
     <LinearLayout

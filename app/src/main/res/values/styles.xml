@@ -26,4 +26,8 @@
         //Nothing here.
     </style>
 
+    <style name="TodayForecastListItemStyle">
+        <item name="android:textColor">@color/today_list_item_text_color</item>
+    </style>
+
 </resources>

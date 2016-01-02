@@ -11,18 +11,22 @@
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2">
+            android:layout_weight="5">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/details_item_day_textview"
+                android:textColor="@color/main_text_color"
+                android:fontFamily="sans-serif-condensed"
                 android:textSize="24sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/details_item_date_textview"
+                android:textColor="@color/detailed_view_secondary_text_color"
+                android:fontFamily="sans-serif-condensed"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -30,23 +34,31 @@
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3">
+            android:layout_weight="5">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-lite"
+                android:textColor="@color/main_text_color"
                 android:id="@+id/details_item_high_textview"
-                android:textSize="92sp"/>
+                android:textSize="96sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-lite"
                 android:id="@+id/details_item_low_textview"
+                android:textColor="@color/detailed_view_secondary_text_color"
                 android:textSize="48sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="@dimen/detailed_view_interline_padding"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/main_text_color"
                 android:id="@+id/details_item_humidity"
                 android:textSize="22sp" />
 
@@ -54,12 +66,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/detailed_view_interline_padding"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/main_text_color"
                 android:id="@+id/details_item_wind"
                 android:textSize="22sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/main_text_color"
                 android:id="@+id/details_item_pressure"
                 android:textSize="22sp" />
 
@@ -69,7 +86,7 @@
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="4"
             android:gravity="center_horizontal">
 
             <ImageView
@@ -80,9 +97,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/detailed_view_secondary_text_color"
                 android:id="@+id/details_item_forecast"
                 android:textSize="22sp" />
         </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8">
+
+        </FrameLayout>
 
     </LinearLayout>
 </ScrollView>

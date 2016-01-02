@@ -13,36 +13,47 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/details_item_day_textview"
+            android:textColor="@color/main_text_color"
+            android:fontFamily="sans-serif-condensed"
             android:textSize="24sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/details_item_date_textview"
+            android:textColor="@color/detailed_view_secondary_text_color"
+            android:fontFamily="sans-serif-condensed"
             android:textSize="16sp" />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="@dimen/detailed_view_interline_padding"
+            android:paddingBottom="@dimen/detailed_view_interline_padding"
             android:gravity="center_horizontal">
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:gravity="center_horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-lite"
+                    android:textColor="@color/main_text_color"
                     android:id="@+id/details_item_high_textview"
-                    android:textSize="92sp"/>
+                    android:textSize="96sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-lite"
                     android:id="@+id/details_item_low_textview"
+                    android:textColor="@color/detailed_view_secondary_text_color"
                     android:textSize="48sp"/>
             </LinearLayout>
 
@@ -62,7 +73,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/details_item_forecast"
-                    android:textSize="22sp" />
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="@color/detailed_view_secondary_text_color"
+                    android:textAppearance="?android:textAppearanceLarge"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -70,19 +83,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/details_item_humidity"
-            android:textSize="22sp" />
+            android:paddingBottom="@dimen/detailed_view_interline_padding"
+            android:textAppearance="?android:textAppearanceLarge"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/details_item_wind"
-            android:textSize="22sp" />
+            android:paddingBottom="@dimen/detailed_view_interline_padding"
+            android:textAppearance="?android:textAppearanceLarge"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/details_item_pressure"
-            android:textSize="22sp" />
+            android:textAppearance="?android:textAppearanceLarge"/>
 
     </LinearLayout>
 

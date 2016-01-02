@@ -3,36 +3,40 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@drawable/touch_selector"
-              android:padding="16dp"
+              android:paddingLeft="60dp"
+              android:paddingTop="22dp"
+              android:background="@color/sunshine_blue"
               android:baselineAligned="false">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center">
+        android:layout_weight="1">
+
+        <TextView
+            style="@style/TodayForecastListItemStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/list_item_date_textview"
+            android:textAppearance="?android:textAppearanceLarge"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Today, 26 December"
-            android:id="@+id/list_item_date_textview"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="9"
             android:id="@+id/list_item_high_textview"
-            android:textSize="20sp"/>
+            android:textColor="@color/today_list_item_text_color"
+            android:fontFamily="sans-serif-lite"
+            android:textSize="72sp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2"
+            android:paddingLeft="12dp"
             android:id="@+id/list_item_low_textview"
-            android:textSize="20sp"/>
+            android:textColor="@color/today_list_item_text_color"
+            android:fontFamily="sans-serif-lite"
+            android:textSize="32sp"/>
 
     </LinearLayout>
 
@@ -45,15 +49,15 @@
         android:gravity="center">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/list_item_icon"
-            />
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/list_item_icon" />
 
         <TextView
+            style="@style/TodayForecastListItemStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="clear"
-            android:id="@+id/list_item_forecast_textview"/>
+            android:id="@+id/list_item_forecast_textview"
+            android:textAppearance="?android:textAppearanceLarge"/>
     </LinearLayout>
 </LinearLayout>

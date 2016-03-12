@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.android.sunshine.app.service.SunshineService;
+
 import static com.example.android.sunshine.app.data.WeatherContract.*;
 
 /**
@@ -131,7 +133,9 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     private void fetchForecast() {
-        new FetchWeatherTask(getActivity()).execute(Utility.getPreferredLocation(getActivity()));
+        Intent sunshineServiceIntent = new Intent(getActivity(), SunshineService.class);
+        sunshineServiceIntent.putExtra(SunshineService.LOCATION, Utility.getPreferredLocation(getActivity()));
+        getActivity().startService(sunshineServiceIntent);
     }
 
     @Override
@@ -173,6 +177,6 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         /**
          * DetailFragmentCallback for when an item has been selected.
          */
-        public void onItemSelected(Uri dateUri);
+        void onItemSelected(Uri dateUri);
     }
 }

@@ -230,14 +230,11 @@ public class Utility {
         return String.format(context.getString(windFormat), windSpeed, direction);
     }
 
-    static String formatTemperature(Context context, double temperature, boolean isMetric) {
-        double temp;
-        if ( !isMetric ) {
-            temp = 9*temperature/5+32;
-        } else {
-            temp = temperature;
-        }
-        return context.getString(R.string.format_temperature, temp);
+    public static String formatTemperature(Context context, double temperature) {
+        if (!isMetric(context))
+            temperature = 9*temperature/5+32;
+        // For presentation, assume the user doesn't care about tenths of a degree.
+        return String.format(context.getString(R.string.format_temperature), temperature);
     }
 
     static String formatDate(long dateInMillis) {

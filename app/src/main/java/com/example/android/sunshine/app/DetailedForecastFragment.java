@@ -138,14 +138,13 @@ public class DetailedForecastFragment extends Fragment
 
     private void populateData(Cursor cursor) {
         if (cursor.moveToFirst()) {
-            boolean isMetric = Utility.isMetric(getActivity());
             long dateInMillis = cursor.getLong(COL_WEATHER_DATE);
             mDayTextView.setText(Utility.getDayName(getActivity(), dateInMillis));
             mDateTextView.setText(Utility.getFormattedMonthDay(getActivity(), dateInMillis));
             mMaxTemperatureTextView.setText(Utility.formatTemperature(
-                    getActivity(), cursor.getDouble(COL_WEATHER_MAX_TEMP), isMetric));
+                    getActivity(), cursor.getDouble(COL_WEATHER_MAX_TEMP)));
             mMinTemperatureTextView.setText(Utility.formatTemperature(
-                    getActivity(), cursor.getDouble(COL_WEATHER_MIN_TEMP), isMetric));
+                    getActivity(), cursor.getDouble(COL_WEATHER_MIN_TEMP)));
             mHumidityTextView.setText(getActivity().getString(R.string.format_humidity,
                     cursor.getFloat(COL_WEATHER_HUMIDITY)));
             mWindTextView.setText(Utility.getFormattedWind(getActivity(),

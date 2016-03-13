@@ -327,7 +327,8 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
                 values = cVVector.toArray(values);
                 inserted = getContext().getContentResolver().
                         bulkInsert(WeatherContract.WeatherEntry.CONTENT_URI, values);
-                notifyWeather();
+                if (Utility.isNotificationsEnabled(getContext()))
+                    notifyWeather();
             }
 
             Log.d(LOG_TAG, "Fetching weather complete. " + inserted + " inserted");

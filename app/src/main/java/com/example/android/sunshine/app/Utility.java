@@ -197,6 +197,11 @@ public class Utility {
                 .equals(context.getString(R.string.pref_temp_unit_metric));
     }
 
+    public static boolean isNotificationsEnabled(@NonNull Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(context.getString(R.string.pref_notifications_key), true);
+    }
+
     public static String getFormattedWind(Context context, float windSpeed, float degrees) {
         int windFormat;
         if (Utility.isMetric(context)) {

@@ -4,11 +4,11 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings.
@@ -31,6 +31,7 @@ public class SettingsActivity extends PreferenceActivity
         // updated when the preference changes.
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_location_key)));
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_temp_unit_key)));
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_notifications_key)));
     }
 
     /**
@@ -44,17 +45,23 @@ public class SettingsActivity extends PreferenceActivity
 
         // Trigger the listener immediately with the preference's
         // current value.
-        onPreferenceChange(preference,
+        boolean isNotificationPref =
+                preference.getKey().equals(getString(R.string.pref_notifications_key));
+        onPreferenceChange(preference, !isNotificationPref ?
                 PreferenceManager
                         .getDefaultSharedPreferences(preference.getContext())
-                        .getString(preference.getKey(), ""));
+                        .getString(preference.getKey(), "") :
+                PreferenceManager
+                        .getDefaultSharedPreferences(preference.getContext())
+                        .getBoolean(preference.getKey(), true)
+        );
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object value) {
-        String stringValue = value.toString();
 
         if (preference instanceof ListPreference) {
+            String stringValue = value.toString();
             // For list preferences, look up the correct display value in
             // the preference's 'entries' list (since they have separate labels/values).
             ListPreference listPreference = (ListPreference) preference;
@@ -62,7 +69,10 @@ public class SettingsActivity extends PreferenceActivity
             if (prefIndex >= 0) {
                 preference.setSummary(listPreference.getEntries()[prefIndex]);
             }
+        } else if (preference instanceof CheckBoxPreference) {
+            ((CheckBoxPreference) preference).setChecked((Boolean)value);
         } else {
+            String stringValue = value.toString();
             // For other preferences, set the summary to the value's simple string representation.
             preference.setSummary(stringValue);
         }

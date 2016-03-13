@@ -1,13 +1,9 @@
 package com.example.android.sunshine.app;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -22,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.android.sunshine.app.service.SunshineService;
+import com.example.android.sunshine.app.sync.SunshineSyncAdapter;
 
 import static com.example.android.sunshine.app.data.WeatherContract.*;
 
@@ -137,12 +133,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     private void fetchForecast() {
-        Intent sunshineAlertIntent = new Intent(getActivity(), SunshineService.AlarmReceiver.class);
-        sunshineAlertIntent.putExtra(SunshineService.LOCATION, Utility.getPreferredLocation(getActivity()));
-        AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, sunshineAlertIntent, 0);
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 5000, pendingIntent);
-//        getActivity().startService(sunshineServiceIntent);
+        SunshineSyncAdapter.syncImmediately(getActivity());
     }
 
     @Override

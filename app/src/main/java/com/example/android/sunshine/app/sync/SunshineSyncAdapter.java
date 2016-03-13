@@ -153,7 +153,6 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
                 }
             }
         }
-        // We'll get here only if there was an error getting or parsing the forecast.
     }
 
     /**
@@ -327,8 +326,13 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
                 values = cVVector.toArray(values);
                 inserted = getContext().getContentResolver().
                         bulkInsert(WeatherContract.WeatherEntry.CONTENT_URI, values);
-                if (Utility.isNotificationsEnabled(getContext()))
+                String yesterday = Long.toString(dayTime.setJulianDay(julianStartDay - 1));
+                getContext().getContentResolver().delete(WeatherContract.WeatherEntry.CONTENT_URI,
+                        WeatherContract.WeatherEntry.COLUMN_DATE + " <= ?", new String[]{yesterday});
+
+                if (Utility.isNotificationsEnabled(getContext())) {
                     notifyWeather();
+                }
             }
 
             Log.d(LOG_TAG, "Fetching weather complete. " + inserted + " inserted");
